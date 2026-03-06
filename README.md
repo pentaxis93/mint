@@ -19,6 +19,8 @@ The tool itself still runs on Claude Code (that's fine — it's the authoring en
 ### Python dependencies
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install anthropic pyyaml
 ```
 
