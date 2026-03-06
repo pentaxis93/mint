@@ -430,7 +430,7 @@ After packaging, direct the user to the resulting `.skill` file path so they can
 
 ---
 
-## Limited-environment instructions (no subagents)
+## Limited-environment instructions
 
 In environments without subagents (e.g., single-agent chat interfaces), the core workflow is the same (draft → test → review → improve → repeat), but some mechanics change. Here's what to adapt:
 

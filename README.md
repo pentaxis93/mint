@@ -15,7 +15,7 @@ The tool itself still runs on Claude Code (that's fine — it's the authoring en
 - Python 3.8+
 - [`claude` CLI](https://docs.anthropic.com/en/docs/claude-code) — required by `run_eval.py` and `run_loop.py`
 
-> **Note:** Only tested on Linux and macOS. Windows is untested.
+> **Note:** Only tested on Debian. Other Linux distributions, macOS, and Windows are untested.
 
 ### Python dependencies
 
