@@ -59,10 +59,9 @@ UPSTREAM_DIR="$(mktemp -d)"
 
 # Fresh extraction of upstream subtree
 git clone https://github.com/anthropics/claude-plugins-official.git "$UPSTREAM_DIR"
-cd "$UPSTREAM_DIR" && git filter-repo --subdirectory-filter plugins/skill-creator/
+git -C "$UPSTREAM_DIR" filter-repo --subdirectory-filter plugins/skill-creator/
 
-# Merge into this repo
-cd /path/to/skill-creator
+# Merge into this repo (run from your skill-creator checkout)
 git remote add upstream-update "$UPSTREAM_DIR"
 git fetch upstream-update && git merge upstream-update/main
 git remote remove upstream-update
