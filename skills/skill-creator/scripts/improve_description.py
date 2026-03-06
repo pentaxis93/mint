@@ -2,7 +2,7 @@
 """Improve a skill description based on eval results.
 
 Takes eval results (from run_eval.py) and generates an improved description
-using an LLM with extended thinking.
+using Claude with extended thinking.
 """
 
 # FORK NOTE: Prompt template neutralized for platform-agnostic output.
@@ -31,7 +31,7 @@ def improve_description(
     log_dir: Path | None = None,
     iteration: int | None = None,
 ) -> str:
-    """Call an LLM to improve the description based on eval results."""
+    """Call Claude to improve the description based on eval results."""
     failed_triggers = [
         r for r in eval_results["results"]
         if r["should_trigger"] and not r["pass"]

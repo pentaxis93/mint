@@ -14,13 +14,14 @@ The tool itself still runs on Claude Code (that's fine — it's the authoring en
 
 - Python 3.8+
 - [`claude` CLI](https://docs.anthropic.com/en/docs/claude-code) — required by `run_eval.py` and `run_loop.py`
-- [`git-filter-repo`](https://github.com/newren/git-filter-repo) — only needed for syncing upstream changes
+
+> **Note:** Only tested on Linux and macOS. Windows is untested.
 
 ### Python dependencies
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install anthropic pyyaml
 ```
 
@@ -37,7 +38,7 @@ Two files modified, everything else untouched:
 
 - **`skills/skill-creator/SKILL.md`** — All output-shaping and contextual references neutralized, plus a new "Platform-Agnostic Output" section. Key replacements: "Claude" → "the agent" / "AI" / "an LLM", "MCPs" → "tools", "Claude's available_skills list" → "the agent's skill list", "Claude.ai-specific instructions" → "Limited-environment instructions", "Cowork" → generic multi-agent terminology. The `claude` CLI binary name is retained where it refers to a shell command.
 
-- **`skills/skill-creator/scripts/improve_description.py`** — Prompt template and docstrings neutralized. Fork note moved to module level to reduce merge-conflict surface with upstream.
+- **`skills/skill-creator/scripts/improve_description.py`** — Prompt template neutralized. Fork note at module level to reduce merge-conflict surface with upstream.
 
 Files **not** modified (confirmed no output-shaping Claude references): `run_eval.py`, `run_loop.py`, `aggregate_benchmark.py`, `generate_report.py`, `package_skill.py`, `quick_validate.py`, `utils.py`, `grader.md`, `comparator.md`, `analyzer.md`, `schemas.md`, `viewer.html`, `generate_review.py`, `eval_review.html`.
 
@@ -51,7 +52,7 @@ License:    Apache 2.0
 
 ## Syncing upstream changes
 
-To pull in upstream updates:
+Requires [`git-filter-repo`](https://github.com/newren/git-filter-repo). To pull in upstream updates:
 
 ```bash
 UPSTREAM_DIR="$(mktemp -d)"
