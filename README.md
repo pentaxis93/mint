@@ -1,3 +1,50 @@
-# skill-creator
+# skill-creator (platform-agnostic fork)
 
-Create new skills, improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, or benchmark skill performance with variance analysis.
+Create new skills, improve existing skills, and measure skill performance.
+
+## What this is
+
+A fork of [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) (`plugins/skill-creator/`) that produces **platform-agnostic skills** — usable by any agent that reads SKILL.md files, not just Claude Code.
+
+The tool itself still runs on Claude Code (that's fine — it's the authoring environment). Only the **generated output** (SKILL.md files, descriptions, reference content) has been neutralized to remove platform-specific assumptions.
+
+## What changed
+
+Two files modified, everything else untouched:
+
+- **`skills/skill-creator/SKILL.md`** — 9 surgical text replacements + 1 new "Platform-Agnostic Output" section. Replaces "Claude" with "the agent", "MCPs" with "tools", "Claude's available_skills list" with "the agent's skill list" in all output-shaping instructions.
+
+- **`skills/skill-creator/scripts/improve_description.py`** — 3 edits in the prompt template that shapes optimized descriptions. Same neutralization pattern.
+
+Files **not** modified (confirmed no output-shaping Claude references): `run_eval.py`, `run_loop.py`, `aggregate_benchmark.py`, `generate_report.py`, `package_skill.py`, `quick_validate.py`, `utils.py`, `grader.md`, `comparator.md`, `analyzer.md`, `schemas.md`, `viewer.html`, `generate_review.py`, `eval_review.html`.
+
+## Upstream source
+
+```
+Repository: https://github.com/anthropics/claude-plugins-official
+Subtree:    plugins/skill-creator/
+License:    Apache 2.0
+```
+
+## Syncing upstream changes
+
+To pull in upstream updates:
+
+```bash
+# Fresh extraction of upstream subtree
+git clone https://github.com/anthropics/claude-plugins-official.git /tmp/upstream-fresh
+cd /tmp/upstream-fresh && git filter-repo --subdirectory-filter plugins/skill-creator/
+
+# Merge into this repo
+cd /path/to/skill-creator
+git remote add upstream-update /tmp/upstream-fresh
+git fetch upstream-update && git merge upstream-update/main
+git remote remove upstream-update
+rm -rf /tmp/upstream-fresh
+```
+
+Resolve any conflicts in `SKILL.md` or `improve_description.py` by keeping the platform-agnostic wording.
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE).
