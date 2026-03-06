@@ -44,7 +44,7 @@ This repo is a fork. The `gh` CLI defaults to upstream, so **always pass `--repo
 
 ### Skill Structure
 
-`skills/skill-creator/SKILL.md` is the core instruction file (~490 lines). It defines the full skill-creation workflow: capture intent → draft SKILL.md → run evals → grade → iterate → optimize description → package.
+`skills/skill-creator/SKILL.md` is the core instruction file. It defines the full skill-creation workflow: capture intent → draft SKILL.md → run evals → grade → iterate → optimize description → package.
 
 Supporting directories under `skills/skill-creator/`:
 - `agents/` — Markdown instruction files for spawning specialized subagents (grader, comparator, analyzer)

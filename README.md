@@ -20,7 +20,7 @@ The tool itself still runs on Claude Code (that's fine — it's the authoring en
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install anthropic pyyaml
 ```
 
