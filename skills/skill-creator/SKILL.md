@@ -78,7 +78,7 @@ Generated skills must work across any agent platform. When writing skill content
 - Frame triggering mechanics generically ("the agent's skill list" not platform-specific names)
 - Do not reference any specific agent platform in the skill's instructions or description
 
-This applies to SKILL.md content, descriptions, and bundled reference files. The skill-creator tool itself runs on Claude Code — that's fine. Only the generated output must be platform-neutral.
+This applies to SKILL.md content, descriptions, and bundled reference files. The skill-creator tool itself runs on a specific platform — that's fine. Only the generated output must be platform-neutral.
 
 ### Skill Writing Guide
 
@@ -256,7 +256,7 @@ Put each with_skill version before its baseline counterpart.
    ```
    For iteration 2+, also pass `--previous-workspace <workspace>/iteration-<N-1>`.
 
-   **Cowork / headless environments:** If `webbrowser.open()` is not available or the environment has no display, use `--static <output_path>` to write a standalone HTML file instead of starting a server. Feedback will be downloaded as a `feedback.json` file when the user clicks "Submit All Reviews". After download, copy `feedback.json` into the workspace directory for the next iteration to pick up.
+   **Headless environments:** If `webbrowser.open()` is not available or the environment has no display, use `--static <output_path>` to write a standalone HTML file instead of starting a server. Feedback will be downloaded as a `feedback.json` file when the user clicks "Submit All Reviews". After download, copy `feedback.json` into the workspace directory for the next iteration to pick up.
 
 Note: please use generate_review.py to create the viewer; there's no need to write custom HTML.
 
@@ -449,16 +449,16 @@ In environments without subagents (e.g., single-agent chat interfaces), the core
 
 ---
 
-## Cowork-Specific Instructions
+## Multi-agent headless environments
 
-If you're in Cowork, the main things to know are:
+If you have subagents but no browser or display, the main things to know are:
 
 - You have subagents, so the main workflow (spawn test cases in parallel, run baselines, grade, etc.) all works. (However, if you run into severe problems with timeouts, it's OK to run the test prompts in series rather than parallel.)
-- You don't have a browser or display, so when generating the eval viewer, use `--static <output_path>` to write a standalone HTML file instead of starting a server. Then proffer a link that the user can click to open the HTML in their browser.
-- Cowork tends to skip the eval viewer step. To reiterate: regardless of your environment, after running tests, always generate the eval viewer for the human to review before revising the skill yourself. Use `generate_review.py` (not hand-written HTML). GENERATE THE EVAL VIEWER *BEFORE* evaluating inputs yourself — get results in front of the human ASAP.
+- Since there's no display, when generating the eval viewer, use `--static <output_path>` to write a standalone HTML file instead of starting a server. Then proffer a link that the user can click to open the HTML in their browser.
+- Multi-agent headless environments tend to skip the eval viewer step. To reiterate: regardless of your environment, after running tests, always generate the eval viewer for the human to review before revising the skill yourself. Use `generate_review.py` (not hand-written HTML). GENERATE THE EVAL VIEWER *BEFORE* evaluating inputs yourself — get results in front of the human ASAP.
 - Feedback works differently: since there's no running server, the viewer's "Submit All Reviews" button will download `feedback.json` as a file. You can then read it from there (you may have to request access first).
 - Packaging works — `package_skill.py` just needs Python and a filesystem.
-- Description optimization (`run_loop.py` / `run_eval.py`) should work in Cowork just fine since it uses `claude -p` via subprocess, not a browser, but please save it until you've fully finished making the skill and the user agrees it's in good shape.
+- Description optimization (`run_loop.py` / `run_eval.py`) should work fine since it uses `claude -p` via subprocess, not a browser, but please save it until you've fully finished making the skill and the user agrees it's in good shape.
 
 ---
 
@@ -486,6 +486,6 @@ Repeating one more time the core loop here for emphasis:
 - Repeat until you and the user are satisfied
 - Package the final skill and return it to the user.
 
-Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. If you're in Cowork, please specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
+Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. In multi-agent environments, specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
 
 Good luck!

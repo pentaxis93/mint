@@ -76,7 +76,7 @@ Required fields: `name` (kebab-case, max 64 chars), `description` (max 1024 char
 ## Fork-Specific Rules
 
 Only two files differ from upstream:
-- `skills/skill-creator/SKILL.md` — 18 text replacements + "Platform-Agnostic Output" section
+- `skills/skill-creator/SKILL.md` — platform-neutral replacements + "Platform-Agnostic Output" section
 - `skills/skill-creator/scripts/improve_description.py` — prompt template + docstring neutralization, fork note at module level
 
 When syncing upstream changes, resolve conflicts in these two files by keeping platform-agnostic wording. All other files are unmodified from upstream.

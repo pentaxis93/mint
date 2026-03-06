@@ -35,7 +35,7 @@ All other scripts use Python standard library only.
 
 Two files modified, everything else untouched:
 
-- **`skills/skill-creator/SKILL.md`** — 18 text replacements + 1 new "Platform-Agnostic Output" section. All output-shaping and contextual references neutralized: "Claude" → "the agent" / "AI" / "an LLM", "MCPs" → "tools", "Claude's available_skills list" → "the agent's skill list", "Claude.ai-specific instructions" → "Limited-environment instructions". Only the `claude` CLI binary name and the Platform-Agnostic Output instructional section retain the word "Claude".
+- **`skills/skill-creator/SKILL.md`** — All output-shaping and contextual references neutralized, plus a new "Platform-Agnostic Output" section. Key replacements: "Claude" → "the agent" / "AI" / "an LLM", "MCPs" → "tools", "Claude's available_skills list" → "the agent's skill list", "Claude.ai-specific instructions" → "Limited-environment instructions", "Cowork" → generic multi-agent terminology. The `claude` CLI binary name is retained where it refers to a shell command.
 
 - **`skills/skill-creator/scripts/improve_description.py`** — Prompt template and docstrings neutralized. Fork note moved to module level to reduce merge-conflict surface with upstream.
 
@@ -54,16 +54,18 @@ License:    Apache 2.0
 To pull in upstream updates:
 
 ```bash
+UPSTREAM_DIR="$(mktemp -d)"
+
 # Fresh extraction of upstream subtree
-git clone https://github.com/anthropics/claude-plugins-official.git /tmp/upstream-fresh
-cd /tmp/upstream-fresh && git filter-repo --subdirectory-filter plugins/skill-creator/
+git clone https://github.com/anthropics/claude-plugins-official.git "$UPSTREAM_DIR"
+cd "$UPSTREAM_DIR" && git filter-repo --subdirectory-filter plugins/skill-creator/
 
 # Merge into this repo
 cd /path/to/skill-creator
-git remote add upstream-update /tmp/upstream-fresh
+git remote add upstream-update "$UPSTREAM_DIR"
 git fetch upstream-update && git merge upstream-update/main
 git remote remove upstream-update
-rm -rf /tmp/upstream-fresh
+rm -rf "$UPSTREAM_DIR"
 ```
 
 Resolve any conflicts in `SKILL.md` or `improve_description.py` by keeping the platform-agnostic wording.
