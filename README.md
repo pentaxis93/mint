@@ -8,6 +8,27 @@ A fork of [anthropics/claude-plugins-official](https://github.com/anthropics/cla
 
 The tool itself still runs on Claude Code (that's fine — it's the authoring environment). Only the **generated output** (SKILL.md files, descriptions, reference content) has been neutralized to remove platform-specific assumptions.
 
+## Installation
+
+### Prerequisites
+
+- Python 3.8+
+- [`claude` CLI](https://docs.anthropic.com/en/docs/claude-code) — required by `run_eval.py` and `run_loop.py`
+- [`git-filter-repo`](https://github.com/newren/git-filter-repo) — only needed for syncing upstream changes
+
+### Python dependencies
+
+```bash
+pip install anthropic pyyaml
+```
+
+| Package | Required by | Purpose |
+|---------|------------|---------|
+| `anthropic` | `improve_description.py`, `run_loop.py` | API calls for description optimization |
+| `pyyaml` | `quick_validate.py`, `package_skill.py` | SKILL.md frontmatter parsing |
+
+All other scripts use Python standard library only.
+
 ## What changed
 
 Two files modified, everything else untouched:
