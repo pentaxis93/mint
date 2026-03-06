@@ -2,8 +2,11 @@
 """Improve a skill description based on eval results.
 
 Takes eval results (from run_eval.py) and generates an improved description
-using Claude with extended thinking.
+using an LLM with extended thinking.
 """
+
+# FORK NOTE: Prompt template neutralized for platform-agnostic output.
+# See README.md § "What changed" for the full list of edits.
 
 import argparse
 import json
@@ -28,7 +31,7 @@ def improve_description(
     log_dir: Path | None = None,
     iteration: int | None = None,
 ) -> str:
-    """Call Claude to improve the description based on eval results."""
+    """Call an LLM to improve the description based on eval results."""
     failed_triggers = [
         r for r in eval_results["results"]
         if r["should_trigger"] and not r["pass"]
@@ -46,7 +49,6 @@ def improve_description(
     else:
         scores_summary = f"Train: {train_score}"
 
-    # FORK NOTE: Prompt neutralized for platform-agnostic output (no "Claude Code", no "Claude's available_skills")
     prompt = f"""You are optimizing a skill description for a skill called "{skill_name}". A "skill" is sort of like a prompt, but with progressive disclosure -- there's a title and description that the agent sees when deciding whether to use the skill, and then if it does use the skill, it reads the .md file which has lots more details and potentially links to other resources in the skill folder like helper files and scripts and additional documentation or examples.
 
 The description appears in the agent's skill list. When a user sends a query, the agent decides whether to invoke the skill based solely on the title and on this description. Your goal is to write a description that triggers for relevant queries, and doesn't trigger for irrelevant ones.

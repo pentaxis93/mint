@@ -35,9 +35,9 @@ All other scripts use Python standard library only.
 
 Two files modified, everything else untouched:
 
-- **`skills/skill-creator/SKILL.md`** — 9 surgical text replacements + 1 new "Platform-Agnostic Output" section. Replaces "Claude" with "the agent", "MCPs" with "tools", "Claude's available_skills list" with "the agent's skill list" in all output-shaping instructions.
+- **`skills/skill-creator/SKILL.md`** — 18 text replacements + 1 new "Platform-Agnostic Output" section. All output-shaping and contextual references neutralized: "Claude" → "the agent" / "AI" / "an LLM", "MCPs" → "tools", "Claude's available_skills list" → "the agent's skill list", "Claude.ai-specific instructions" → "Limited-environment instructions". Only the `claude` CLI binary name and the Platform-Agnostic Output instructional section retain the word "Claude".
 
-- **`skills/skill-creator/scripts/improve_description.py`** — 3 edits in the prompt template that shapes optimized descriptions. Same neutralization pattern.
+- **`skills/skill-creator/scripts/improve_description.py`** — Prompt template and docstrings neutralized. Fork note moved to module level to reduce merge-conflict surface with upstream.
 
 Files **not** modified (confirmed no output-shaping Claude references): `run_eval.py`, `run_loop.py`, `aggregate_benchmark.py`, `generate_report.py`, `package_skill.py`, `quick_validate.py`, `utils.py`, `grader.md`, `comparator.md`, `analyzer.md`, `schemas.md`, `viewer.html`, `generate_review.py`, `eval_review.html`.
 
