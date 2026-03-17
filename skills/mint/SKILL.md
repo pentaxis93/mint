@@ -1,6 +1,6 @@
 ---
 name: mint
-description: Create new skills or protocols, modify and improve existing ones, and measure performance. Use when users want to create a skill or protocol from scratch, update or optimize an existing one, run evals to test one, benchmark performance with variance analysis, or optimize a definition's description for better triggering accuracy.
+description: Create new skills and protocols, modify and improve existing ones, validate structure for both populations, and run evals to test skill performance. Use when users want to create a skill or protocol from scratch, update or optimize an existing one, validate SKILL.md structure for either population, run evals or benchmarks for a skill, or optimize a definition's description for better triggering accuracy.
 ---
 
 # Mint
