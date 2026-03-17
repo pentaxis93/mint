@@ -1,11 +1,11 @@
 ---
-name: skill-creator
-description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.
+name: mint
+description: Create new skills or protocols, modify and improve existing ones, and measure performance. Use when users want to create a skill or protocol from scratch, update or optimize an existing one, run evals to test one, benchmark performance with variance analysis, or optimize a definition's description for better triggering accuracy.
 ---
 
-# Skill Creator
+# Mint
 
-A skill for creating new skills and iteratively improving them.
+A skill for creating new skills or protocols and iteratively improving them.
 
 At a high level, the process of creating a skill goes like this:
 
@@ -31,7 +31,7 @@ Cool? Cool.
 
 ## Communicating with the user
 
-The skill creator is liable to be used by people across a wide range of familiarity with coding jargon. If you haven't heard (and how could you, it's only very recently that it started), there's a trend now where the power of AI is inspiring plumbers to open up their terminals, parents and grandparents to google "how to install npm". On the other hand, the bulk of users are probably fairly computer-literate.
+Mint is liable to be used by people across a wide range of familiarity with coding jargon. If you haven't heard (and how could you, it's only very recently that it started), there's a trend now where the power of AI is inspiring plumbers to open up their terminals, parents and grandparents to google "how to install npm". On the other hand, the bulk of users are probably fairly computer-literate.
 
 So please pay attention to context cues to understand how to phrase your communication! In the default case, just to give you some idea:
 
@@ -48,10 +48,10 @@ It's OK to briefly explain terms if you're in doubt, and feel free to clarify te
 
 Start by understanding the user's intent. The current conversation might already contain a workflow the user wants to capture (e.g., they say "turn this into a skill"). If so, extract answers from the conversation history first — the tools used, the sequence of steps, corrections the user made, input/output formats observed. The user may need to fill the gaps, and should confirm before proceeding to the next step.
 
-1. What should this skill enable the agent to do?
-2. When should this skill trigger? (what user phrases/contexts)
+1. What should this skill or protocol enable the agent to do?
+2. When should this definition trigger? (what user phrases/contexts)
 3. What's the expected output format?
-4. Should we set up test cases to verify the skill works? Skills with objectively verifiable outputs (file transforms, data extraction, code generation, fixed workflow steps) benefit from test cases. Skills with subjective outputs (writing style, art) often don't need them. Suggest the appropriate default based on the skill type, but let the user decide.
+4. Should we set up test cases to verify it works? Definitions with objectively verifiable outputs (file transforms, data extraction, code generation, fixed workflow steps) benefit from test cases. Definitions with subjective outputs (writing style, art) often don't need them. Suggest the appropriate default based on the definition type, but let the user decide.
 
 ### Interview and Research
 
@@ -79,7 +79,7 @@ Generated skills must work across any agent platform. When writing skill content
 - Frame triggering mechanics generically ("the agent's skill list" not platform-specific names)
 - Do not reference any specific agent platform in the skill's instructions or description
 
-This applies to SKILL.md content, descriptions, and bundled reference files. The skill-creator tool itself runs on a specific platform — that's fine. Only the generated output must be platform-neutral.
+This applies to SKILL.md content, descriptions, and bundled reference files. The mint tool itself runs on a specific platform — that's fine. Only the generated output must be platform-neutral.
 
 ### Skill Writing Guide
 
@@ -237,7 +237,7 @@ Once all runs are done:
 
 1. **Grade each run** — spawn a grader subagent (or grade inline) that reads `agents/grader.md` and evaluates each assertion against the outputs. Save results to `grading.json` in each run directory. The grading.json expectations array must use the fields `text`, `passed`, and `evidence` (not `name`/`met`/`details` or other variants) — the viewer depends on these exact field names. For assertions that can be checked programmatically, write and run a script rather than eyeballing it — scripts are faster, more reliable, and can be reused across iterations.
 
-2. **Aggregate into benchmark** — run the aggregation script from the skill-creator directory:
+2. **Aggregate into benchmark** — run the aggregation script from the mint directory:
    ```bash
    python -m scripts.aggregate_benchmark <workspace>/iteration-N --skill-name <name>
    ```
@@ -248,7 +248,7 @@ Put each with_skill version before its baseline counterpart.
 
 4. **Launch the viewer** with both qualitative outputs and quantitative data:
    ```bash
-   nohup python <skill-creator-path>/eval-viewer/generate_review.py \
+   nohup python <mint-path>/eval-viewer/generate_review.py \
      <workspace>/iteration-N \
      --skill-name "my-skill" \
      --benchmark <workspace>/iteration-N/benchmark.json \

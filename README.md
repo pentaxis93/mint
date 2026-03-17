@@ -1,10 +1,10 @@
-# skill-creator (platform-agnostic fork)
+# mint
 
-Create new skills, improve existing skills, and measure skill performance.
+Create new skills or protocols, improve existing ones, and measure performance.
 
 ## What this is
 
-A fork of [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) (`plugins/skill-creator/`) that produces **platform-agnostic skills** — usable by any agent that reads SKILL.md files, not just Claude Code.
+A fork of [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) (`plugins/skill-creator/`) that produces **platform-agnostic skills and protocols** usable by any agent that reads `SKILL.md` files, not just Claude Code.
 
 The tool itself still runs on Claude Code (that's fine — it's the authoring environment). Only the **generated output** (SKILL.md files, descriptions, reference content) has been neutralized to remove platform-specific assumptions.
 
@@ -28,19 +28,19 @@ pip install anthropic pyyaml
 | Package | Required by | Purpose |
 |---------|------------|---------|
 | `anthropic` | `improve_description.py`, `run_loop.py` | API calls for description optimization |
-| `pyyaml` | `quick_validate.py`, `package_skill.py` | SKILL.md frontmatter parsing |
+| `pyyaml` | `quick_validate.py`, `package_skill.py` | SKILL.md frontmatter parsing and validation |
 
 All other scripts use Python standard library only.
 
 ## What changed
 
-Two files modified, everything else untouched:
+Key fork-specific changes:
 
-- **`skills/skill-creator/SKILL.md`** — All output-shaping and contextual references neutralized, plus a new "Platform-Agnostic Output" section. Key replacements: "Claude" → "the agent" / "AI" / "an LLM", "MCPs" → "tools", "Claude's available_skills list" → "the agent's skill list", "Claude.ai-specific instructions" → "Limited-environment instructions", "Cowork" → generic multi-agent terminology. The `claude` CLI binary name is retained where it refers to a shell command.
+- **`skills/mint/SKILL.md`** — renamed to `mint`, broadened to cover protocols as well as skills, and kept platform-agnostic in its generated output guidance.
+- **`skills/mint/scripts/quick_validate.py`** — now accepts both skills and protocols. Skills require `name` and `description`; protocols additionally require `requires`, `accepts`, `produces`, `may_produce`, and `trigger`.
+- **`skills/mint/scripts/improve_description.py`** — prompt template neutralized. Fork note remains at module level to reduce merge-conflict surface with upstream.
 
-- **`skills/skill-creator/scripts/improve_description.py`** — Prompt template neutralized. Fork note at module level to reduce merge-conflict surface with upstream.
-
-Files **not** modified (confirmed no output-shaping Claude references): `run_eval.py`, `run_loop.py`, `aggregate_benchmark.py`, `generate_report.py`, `package_skill.py`, `quick_validate.py`, `utils.py`, `grader.md`, `comparator.md`, `analyzer.md`, `schemas.md`, `viewer.html`, `generate_review.py`, `eval_review.html`.
+The upstream source subtree remains `plugins/skill-creator/`; only the fork identity and validator contract changed locally.
 
 ## Upstream source
 
@@ -61,14 +61,14 @@ UPSTREAM_DIR="$(mktemp -d)"
 git clone https://github.com/anthropics/claude-plugins-official.git "$UPSTREAM_DIR"
 git -C "$UPSTREAM_DIR" filter-repo --subdirectory-filter plugins/skill-creator/
 
-# Merge into this repo (run from your skill-creator checkout)
+# Merge into this repo (run from your mint checkout)
 git remote add upstream-update "$UPSTREAM_DIR"
 git fetch upstream-update && git merge upstream-update/main
 git remote remove upstream-update
 rm -rf "$UPSTREAM_DIR"
 ```
 
-Resolve any conflicts in `SKILL.md` or `improve_description.py` by keeping the platform-agnostic wording.
+Resolve conflicts in `SKILL.md`, `quick_validate.py`, or `improve_description.py` by keeping the fork's `mint` naming, protocol support, and platform-agnostic wording.
 
 ## License
 
